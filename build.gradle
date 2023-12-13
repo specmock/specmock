@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+
+subprojects {
+    group = "${groupId}"
+    version = "${projectVersion}"
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceCompatibility = project.javaVersion
+    targetCompatibility = project.javaVersion
+
+    apply plugin: 'java'
+
+    dependencies {
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+        testImplementation "org.assertj:assertj-core:${assertjVersion}"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    tasks.register('unitTest', Test) {
+        group = 'verification'
+        useJUnitPlatform {
+            excludeTags('integration')
+        }
+    }
+
+    tasks.register('integrationTest', Test) {
+        group = 'verification'
+        useJUnitPlatform {
+            includeTags('integration')
+        }
+    }
+}
