@@ -1,0 +1,7 @@
+.githooks/** linguist-vendored
+gradlew linguist-vendored
+*.txt linguist-vendored
+*.tsv linguist-vendored
+*.csv linguist-vendored
+*.json linguist-vendored
+*.data linguist-vendored
