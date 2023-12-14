@@ -1,0 +1,6 @@
+dependencies {
+    implementation("com.google.code.findbugs:jsr305:${property("jsr305Version")}")
+    implementation("com.linecorp.armeria:armeria:${property("armeriaVersion")}")
+
+    implementation("org.springframework.boot:spring-boot-starter-web:${property("springBootVersion")}")
+}

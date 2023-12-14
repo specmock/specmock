@@ -1,0 +1,13 @@
+subprojects {
+    apply plugin: 'checkstyle'
+
+    checkstyle {
+        configDirectory = new File("${rootProject.projectDir}/settings/checkstyle")
+        configFile = new File("${rootProject.projectDir}/settings/checkstyle/checkstyle.xml")
+    }
+
+    tasks.register('lint') {
+        group = 'verification'
+        dependsOn 'checkstyleMain', 'checkstyleTest'
+    }
+}

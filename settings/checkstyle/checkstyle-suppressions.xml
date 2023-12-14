@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+  <!-- Suppress Javadoc-related checks in non-public code. -->
+  <suppress checks="MissingJavadocPackage|MissingJavadocType|MissingJavadocMethod" files="[\\/](examples|internal|it|jmh|test)[\\/]" />
+  <suppress checks="JavadocPackage" files="[\\/](examples|it|jmh|ghz|test)[\\/]" />
+  <!-- Suppress JavadocPackage for tomcat8.0. -->
+  <suppress checks="MissingJavadocPackage" files="tomcat[0-9]" />
+  <!-- Enable 'NonNullByDefaultAnnotation' for package-info.java only. -->
+  <suppress id="NonNullByDefaultAnnotation" files="(?&lt;![\\/]package-info\.java)$" />
+  <!-- Suppress checks related with main method in integration tests and examples. -->
+  <suppress checks="UncommentedMain|HideUtilityClassConstructor" files="[\\/](it|ghz|examples)[\\/]"/>
+  <suppress id="CopyrightHeader" files="[\\/]examples[\\/]" />
+  <!-- Suppress meterRegistry related checks in non-main code. -->
+  <suppress id="PreferFlagsMeterRegistry" files="[\\/](examples|it|jmh|test)[\\/]" />
+  <suppress id="PreferFlagsMeterRegistry" files="[\\/](DefaultFlagsProvider.java|Flags.java|FlagsProvider.java)" />
+  <!-- Suppress PreferReentrantShortLock related checks in non-main code -->
+  <suppress id="PreferReentrantShortLock" files="[\\/](examples|it|jmh|test)[\\/]" />
+</suppressions>
