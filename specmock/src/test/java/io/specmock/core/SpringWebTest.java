@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.kotlin.KotlinModule;
 
 import com.linecorp.armeria.client.WebClient;
 
@@ -51,7 +52,7 @@ import io.specmock.core.example.ExampleApi;
 
 class SpringWebTest {
     private static final String RESPONSE_VALUE = "SUCCESS";
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper().registerModule(new KotlinModule.Builder().build());
     private final WebClient webClient = WebClient.of("http://localhost:18080");
     private HttpSpecServer specServer;
     private Example1Request example1Request;

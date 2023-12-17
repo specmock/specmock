@@ -2,5 +2,7 @@ dependencies {
     implementation("com.google.code.findbugs:jsr305:${property("jsr305Version")}")
     implementation("com.linecorp.armeria:armeria:${property("armeriaVersion")}")
 
-    implementation("org.springframework.boot:spring-boot-starter-web:${property("springBootVersion")}")
+    compileOnly("org.springframework.boot:spring-boot-starter-web:${property("springBootVersion")}")
+    testImplementation("org.springframework.boot:spring-boot-starter-web:${property("springBootVersion")}")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
