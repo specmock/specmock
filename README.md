@@ -1,4 +1,4 @@
-# SpecMock
+# <img src="https://dodn.io/specmock/logo_circle.png" align="right" width="100">SpecMock
 
 SpecMock provides Mock Server for various specs, offering a lightweight, fast, and easy-to-use experience.
 
