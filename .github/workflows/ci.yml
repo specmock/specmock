@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'zulu'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - name: Check
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: check
+      - name: Report to CodeCov
+        uses: codecov/codecov-action@v3
+        env:
+          name: codecov-specmock
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          files: ./specmock/build/reports/jacoco/test/jacocoTestReport.xml

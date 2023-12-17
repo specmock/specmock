@@ -2,6 +2,9 @@ plugins {
     id 'java'
 }
 
+apply from: 'publishing.gradle'
+apply from: 'lint.gradle'
+
 subprojects {
     group = "${groupId}"
     version = "${projectVersion}"
@@ -14,6 +17,7 @@ subprojects {
     targetCompatibility = project.javaVersion
 
     apply plugin: 'java'
+    apply plugin: 'jacoco'
 
     dependencies {
         testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
@@ -25,17 +29,32 @@ subprojects {
         useJUnitPlatform()
     }
 
-    tasks.register('unitTest', Test) {
-        group = 'verification'
-        useJUnitPlatform {
-            excludeTags('integration')
-        }
+    check {
+        finalizedBy jacocoTestReport
     }
 
-    tasks.register('integrationTest', Test) {
-        group = 'verification'
-        useJUnitPlatform {
-            includeTags('integration')
+    jacocoTestReport {
+        reports {
+            xml.required = true
+        }
+        finalizedBy jacocoTestCoverageVerification
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                element = 'CLASS'
+                limit {
+                    counter = 'BRANCH'
+                    value = 'COVEREDRATIO'
+                    minimum = 1
+                }
+                limit {
+                    counter = 'INSTRUCTION'
+                    value = 'COVEREDRATIO'
+                    minimum = 1
+                }
+            }
         }
     }
 }
