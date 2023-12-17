@@ -13,6 +13,9 @@ SpecMock provides Mock Server for various specs, offering a lightweight, fast, a
 ```groovy
 // build.gradle
 testImplementation 'io.specmock:specmock:${specMockVersion}'
+        
+// build.gradle.kts
+testImplementation("io.specmock:specmock:${specMockVersion}")
 
 // pom.xml
 <dependency>
