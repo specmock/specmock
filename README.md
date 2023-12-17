@@ -8,6 +8,20 @@ SpecMock provides Mock Server for various specs, offering a lightweight, fast, a
 [![License](https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSpecMock)](https://twitter.com/SpecMock)
 
+## Dependency
+
+```groovy
+// build.gradle
+testImplementation 'io.specmock:specmock:${specMockVersion}'
+
+// pom.xml
+<dependency>
+    <groupId>io.specmock</groupId>
+    <artifactId>specmock</artifactId>
+    <version>${specMockVersion}</version>
+</dependency>
+```
+
 ## How to use
 
 ### SpringWebBind
