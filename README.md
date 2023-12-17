@@ -46,7 +46,7 @@ void setUp() {
 @Test
 void example1_POST_requestBody() throws Exception {
     RestTemplate restTemplate = new RestTemplate();
-    ExampleResponse response = restTemplate.postForObject("http://localhost:18080/example", new ExampleRequest("REQ"), Example1Response.class);
+    ExampleResponse response = restTemplate.postForObject("http://localhost:18080/example", new ExampleRequest("REQ"), ExampleResponse.class);
 
     // Asserting that the response received from the mock server
     // has the expected string value 'RES'
