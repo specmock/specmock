@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.kotlin.KotlinModule;
 
 import com.linecorp.armeria.common.HttpRequest;
 import com.linecorp.armeria.common.HttpResponse;
@@ -39,7 +40,7 @@ import io.netty.util.AsciiString;
  * ArmeriaHttpSpecHandler class extends AbstractHttpService to handle HTTP requests based on a given HttpSpec.
  */
 public final class ArmeriaHttpSpecHandler extends AbstractHttpService {
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper().registerModule(new KotlinModule.Builder().build());
     private final HttpSpec spec;
 
     /**

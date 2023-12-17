@@ -48,9 +48,9 @@ import io.specmock.core.example.Example6Response;
 import io.specmock.core.example.Example7Request;
 import io.specmock.core.example.Example7Response;
 import io.specmock.core.example.Example8Response;
-import io.specmock.core.example.ExampleApi;
+import io.specmock.core.example.ExampleRestApi;
 
-class SpringWebTest {
+class SpringRestWebTest {
     private static final String RESPONSE_VALUE = "SUCCESS";
     private final ObjectMapper mapper = new ObjectMapper().registerModule(new KotlinModule.Builder().build());
     private final WebClient webClient = WebClient.of("http://localhost:18080");
@@ -72,7 +72,7 @@ class SpringWebTest {
         example7Request = new Example7Request("EXAMPLE6", 10, 10L, BigDecimal.TEN);
 
         final List<HttpSpec> specs = HttpSpec.springWebBuilder()
-                                             .springWebBind(ExampleApi.class)
+                                             .springWebBind(ExampleRestApi.class)
                                              .exchanges(
                                                      HttpExchange.builder()
                                                                  .requestObject(example1Request)
