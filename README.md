@@ -52,5 +52,10 @@ void example1_POST_requestBody() throws Exception {
     // has the expected string value 'RES'
     assertThat(response.getStringValue()).isEqualTo("RES");
 }
+
+@AfterEach
+void tearDown() {
+    specServer.terminate();
+}
 ```
 
