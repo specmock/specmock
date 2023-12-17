@@ -23,7 +23,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,8 +59,9 @@ public final class SpringWebHttpSpecBuilder {
         routeClassMappings = new ArrayList<>();
         final Method[] methods = webBindClass.getDeclaredMethods();
         for (Method method : methods) {
-            final RequestMapping requestMappingAnnotation = method.getDeclaredAnnotation(RequestMapping.class);
-            if (requestMappingAnnotation == null) {
+            final List<HttpRoute> routes = extractSpringWebBindRoutes(method);
+
+            if (routes.isEmpty()) {
                 continue;
             }
             final Class<?> specResponseClass = method.getReturnType();
@@ -67,22 +74,80 @@ public final class SpringWebHttpSpecBuilder {
                 }
             }
 
-            final Set<String> pathList = Arrays.stream(requestMappingAnnotation.value())
-                                               .collect(Collectors.toSet());
-            pathList.addAll(Arrays.stream(requestMappingAnnotation.path()).collect(Collectors.toSet()));
-            for (String path : pathList) {
-                for (RequestMethod requestMethod : requestMappingAnnotation.method()) {
-                    routeClassMappings.add(
-                            new HttpRouteClassMapping(
-                                    HttpRoute.of(requestMethod.toString(), path),
-                                    specRequestClass,
-                                    specResponseClass
-                            )
-                    );
-                }
+            for (HttpRoute route : routes) {
+                routeClassMappings.add(new HttpRouteClassMapping(route, specRequestClass, specResponseClass));
             }
         }
         return this;
+    }
+
+    private static List<HttpRoute> extractSpringWebBindRoutes(Method method) {
+        final List<HttpRoute> routes = new ArrayList<>();
+
+        final RequestMapping requestMapping = method.getDeclaredAnnotation(RequestMapping.class);
+        if (requestMapping != null) {
+            final Set<RequestMethod> requestMethods = Arrays.stream(requestMapping.method())
+                                                            .collect(Collectors.toSet());
+            final Set<String> requestPaths = Stream.concat(Arrays.stream(requestMapping.value()),
+                                                           Arrays.stream(requestMapping.path()))
+                                                   .collect(Collectors.toSet());
+            for (RequestMethod requestMethod : requestMethods) {
+                for (String path : requestPaths) {
+                    routes.add(HttpRoute.of(requestMethod.toString(), path));
+                }
+            }
+        }
+
+        final GetMapping getMapping = method.getDeclaredAnnotation(GetMapping.class);
+        if (getMapping != null) {
+            final Set<String> getPaths = Stream.concat(Arrays.stream(getMapping.value()),
+                                                 Arrays.stream(getMapping.path()))
+                                         .collect(Collectors.toSet());
+            for (String path : getPaths) {
+                routes.add(HttpRoute.get(path));
+            }
+        }
+
+        final PostMapping postMapping = method.getDeclaredAnnotation(PostMapping.class);
+        if (postMapping != null) {
+            final Set<String> postPaths = Stream.concat(Arrays.stream(postMapping.value()),
+                                                       Arrays.stream(postMapping.path()))
+                                               .collect(Collectors.toSet());
+            for (String path : postPaths) {
+                routes.add(HttpRoute.post(path));
+            }
+        }
+
+        final PutMapping putMapping = method.getDeclaredAnnotation(PutMapping.class);
+        if (putMapping != null) {
+            final Set<String> putPaths = Stream.concat(Arrays.stream(putMapping.value()),
+                                                        Arrays.stream(putMapping.path()))
+                                                .collect(Collectors.toSet());
+            for (String path : putPaths) {
+                routes.add(HttpRoute.put(path));
+            }
+        }
+
+        final PatchMapping patchMapping = method.getDeclaredAnnotation(PatchMapping.class);
+        if (patchMapping != null) {
+            final Set<String> patchPaths = Stream.concat(Arrays.stream(patchMapping.value()),
+                                                       Arrays.stream(patchMapping.path()))
+                                               .collect(Collectors.toSet());
+            for (String path : patchPaths) {
+                routes.add(HttpRoute.patch(path));
+            }
+        }
+
+        final DeleteMapping deleteMapping = method.getDeclaredAnnotation(DeleteMapping.class);
+        if (deleteMapping != null) {
+            final Set<String> deletePaths = Stream.concat(Arrays.stream(deleteMapping.value()),
+                                                       Arrays.stream(deleteMapping.path()))
+                                               .collect(Collectors.toSet());
+            for (String path : deletePaths) {
+                routes.add(HttpRoute.delete(path));
+            }
+        }
+        return routes;
     }
 
     /**
