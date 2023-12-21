@@ -69,7 +69,7 @@ class SpringRestWebTest {
         example4Request = new Example4Request("EXAMPLE4", 10, 10L, BigDecimal.TEN);
         example5Request = new Example5Request("EXAMPLE5", 10, 10L, BigDecimal.TEN);
         example6Request = new Example6Request("EXAMPLE6", 10, 10L, BigDecimal.TEN);
-        example7Request = new Example7Request("EXAMPLE6", 10, 10L, BigDecimal.TEN);
+        example7Request = new Example7Request("EXAMPLE7", 10, 10L, BigDecimal.TEN);
 
         final List<HttpSpec> specs = HttpSpec.springWebBuilder()
                                              .springWebBind(ExampleRestApi.class)
