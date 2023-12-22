@@ -26,7 +26,7 @@ class HttpRouteTest {
         assertThat(HttpRoute.get("/get").getMethod()).isEqualTo(HttpMethod.GET);
         assertThat(HttpRoute.post("/post").getMethod()).isEqualTo(HttpMethod.POST);
         assertThat(HttpRoute.put("/put").getMethod()).isEqualTo(HttpMethod.PUT);
-        assertThat(HttpRoute.patch("/pathch").getMethod()).isEqualTo(HttpMethod.PATCH);
+        assertThat(HttpRoute.patch("/patch").getMethod()).isEqualTo(HttpMethod.PATCH);
         assertThat(HttpRoute.delete("/delete").getMethod()).isEqualTo(HttpMethod.DELETE);
     }
 }
