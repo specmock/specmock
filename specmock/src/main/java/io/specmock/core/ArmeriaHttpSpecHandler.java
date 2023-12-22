@@ -41,7 +41,8 @@ import io.netty.util.AsciiString;
  * ArmeriaHttpSpecHandler class extends AbstractHttpService to handle HTTP requests based on a given HttpSpec.
  */
 public final class ArmeriaHttpSpecHandler extends AbstractHttpService {
-    private final ObjectMapper mapper = new ObjectMapper().registerModules(new KotlinModule.Builder().build(), new JavaTimeModule());
+    private final ObjectMapper mapper = new ObjectMapper().registerModules(new KotlinModule.Builder().build(),
+                                                                           new JavaTimeModule());
     private final HttpSpec spec;
 
     /**
